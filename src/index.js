@@ -23,9 +23,11 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	// document.getElementById("submit").addEventListener("click", save, false);
 	// document.getElementById("RETRIEVE").addEventListener("click", retrieve, false);
 	$('#exampleModal').on('hide.bs.modal', function (e) { 
-		var tmpid = $(document.activeElement).attr('id'); alert(tmpid); 
+		var tmpid = $(document.activeElement).attr('id'); 
+		if (tmpid === 'Submit') {
+			console.log("Created.")
+		}
 	});
-	console.log("Hello, World!")
 });
 
 function save() {
