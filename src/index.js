@@ -25,7 +25,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	$('#exampleModal').on('hide.bs.modal', function (e) { 
 		var tmpid = $(document.activeElement).attr('id'); 
 		if (tmpid === 'Submit') {
-			console.log("Created.")
+			console.log("Created." +$('#notebook-name').val())
+			// $('#notebook-name').val()
 		}
 	});
 });
