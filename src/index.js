@@ -27,12 +27,12 @@ document.addEventListener("DOMContentLoaded", (event) => {
 		if (tmpid === 'Submit') {
       var notebook = $('#notebook-name').val();
 			console.log("Created. " +notebook)
-      save(notebook)
+      saveNotebook(notebook);
     }
 	});
 });
 
-function save(notebook) {
+function saveNotebook(notebook) {
 
 	console.log("Saving...");
 	// var email = document.getElementById('email').value;
@@ -42,8 +42,27 @@ function save(notebook) {
 	// // var section = document.getElementById('section').value;
 	// // var page = document.getElementById('page').value;
 
-	set(ref(db, 'users/' + notebook), {
+	set(ref(db, 'users/Ayaan/notebooks'), {
 		notebook: notebook
+	}).then(() => {
+	  alert('Saved');
+	}).catch((error) => {
+	  console.error('Error saving to the database:', error);
+	});
+}
+
+function saveUser(username) {
+
+	console.log("Saving...");
+	// var email = document.getElementById('email').value;
+	// var username = document.getElementById('username').value;
+	// var password = document.getElementById('password').value;
+	// var notebook = document.getElementById('notebook').value;
+	// // var section = document.getElementById('section').value;
+	// // var page = document.getElementById('page').value;
+
+	set(ref(db, 'users/' + username), {
+		username: username
 	}).then(() => {
 	  alert('Saved');
 	}).catch((error) => {
