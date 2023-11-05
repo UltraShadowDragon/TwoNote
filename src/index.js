@@ -25,29 +25,25 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	$('#exampleModal').on('hide.bs.modal', function (e) { 
 		var tmpid = $(document.activeElement).attr('id'); 
 		if (tmpid === 'Submit') {
-			console.log("Created." +$('#notebook-name').val())
-			// $('#notebook-name').val()
-		}
+      var notebook = $('#notebook-name').val();
+			console.log("Created. " +notebook)
+      save(notebook)
+    }
 	});
 });
 
-function save() {
+function save(notebook) {
 
 	console.log("Saving...");
-	var email = document.getElementById('email').value;
-	var username = document.getElementById('username').value;
-	var password = document.getElementById('password').value;
-	var notebook = document.getElementById('notebook').value;
-	var section = document.getElementById('section').value;
-	var page = document.getElementById('page').value;
+	// var email = document.getElementById('email').value;
+	// var username = document.getElementById('username').value;
+	// var password = document.getElementById('password').value;
+	// var notebook = document.getElementById('notebook').value;
+	// // var section = document.getElementById('section').value;
+	// // var page = document.getElementById('page').value;
 
-	set(ref(db, 'users/' + username), {
-		email: email,
-		username: username,
-		password: password,
-		notebook: notebook,
-		section: section,
-		page: page
+	set(ref(db, 'users/' + notebook), {
+		notebook: notebook
 	}).then(() => {
 	  alert('Saved');
 	}).catch((error) => {
