@@ -1,8 +1,7 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
 import { getDatabase, ref, set } from 'firebase/database';
 
-// TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
   apiKey: "AIzaSyDLpohSUDg3EB_iNRbXLJhvBrhMyps8lBY",
   authDomain: "twonote-8563e.firebaseapp.com",
@@ -18,57 +17,50 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);
 
-
 document.addEventListener("DOMContentLoaded", (event) => {
-	// document.getElementById("submit").addEventListener("click", save, false);
-	// document.getElementById("RETRIEVE").addEventListener("click", retrieve, false);
-	$('#exampleModal').on('hide.bs.modal', function (e) { 
-		var tmpid = $(document.activeElement).attr('id'); 
-		if (tmpid === 'Submit') {
-			console.log("Created." +$('#notebook-name').val())
-			// $('#notebook-name').val()
-		}
-	});
-});
+  const currentPage = window.location.pathname;
 
-function save() {
+  if (currentPage === "/signin.html") {
+    const signInForm = document.getElementById("signin-form");
 
-	console.log("Saving...");
-	var email = document.getElementById('email').value;
-	var username = document.getElementById('username').value;
-	var password = document.getElementById('password').value;
-	var notebook = document.getElementById('notebook').value;
-	var section = document.getElementById('section').value;
-	var page = document.getElementById('page').value;
+    if (signInForm) {
+      signInForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
 
-	set(ref(db, 'users/' + username), {
-		email: email,
-		username: username,
-		password: password,
-		notebook: notebook,
-		section: section,
-		page: page
-	}).then(() => {
-	  alert('Saved');
-	}).catch((error) => {
-	  console.error('Error saving to the database:', error);
-	});
-}
+        signInWithEmailAndPassword(auth, email, password)
+          .then((userCredential) => {
+            const user = userCredential.user;
+            console.log("User signed in:", user);
+            window.location.href = "index.html"; // Redirect to the main page
+          })
+          .catch((error) => {
+            console.error("Error signing in:", error);
+          });
+      });
+    }
+  } else if (currentPage === "/index.html") {
+    const signOutBtn = document.getElementById("signOutBtn");
 
-function retrieve() {
+    if (signOutBtn) {
+      signOutBtn.addEventListener("click", () => {
+        signOut(auth)
+          .then(() => {
+            console.log("User signed out");
+          })
+          .catch((error) => {
+            console.error("Error signing out:", error);
+          });
+      });
 
-	console.log("Notebook:" + notebook.value);
-	console.log("Page:" + page.value);
-	console.log("Section:" + section.value);
-
-	alert("Retrieved")
-}
-
-onAuthStateChanged(auth, user => {
-  if(user != null){
-    console.log('Logged in!');
-  } else {
-    console.log('No user! Please sign in.')
+      onAuthStateChanged(auth, user => {
+        if (user != null) {
+          console.log('Logged in!');
+        } else {
+          console.log('No user! Please sign in.');
+        }
+      });
+    }
   }
 });
-
