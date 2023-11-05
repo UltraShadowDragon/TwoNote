@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "css-loader": "^6.8.1",
     "firebase": "^10.5.0",
     "html-webpack-plugin": "^5.5.3",
     "serve": "^14.2.1"
