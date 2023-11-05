@@ -42,7 +42,7 @@ function saveNotebook(notebook) {
 	// // var section = document.getElementById('section').value;
 	// // var page = document.getElementById('page').value;
 
-	set(ref(db, 'users/Ayaan/notebooks'), {
+	set(ref(db, 'notebooks/' + notebook), {
 		notebook: notebook
 	}).then(() => {
 	  alert('Saved');
