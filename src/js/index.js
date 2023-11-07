@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
 import { getDatabase, ref, set } from 'firebase/database';
+
 
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
