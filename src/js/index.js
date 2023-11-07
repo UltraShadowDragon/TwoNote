@@ -48,7 +48,7 @@ function saveNotebook(notebook) {
 	set(ref(db, 'notebooks/' + notebook), {
 		notebook: notebook
 	}).then(() => {
-	  alert('Saved');
+	  console.log('Saved');
 	}).catch((error) => {
 	  console.error('Error saving to the database:', error);
 	});
@@ -67,7 +67,7 @@ function saveUser(username) {
 	set(ref(db, 'users/' + username), {
 		username: username
 	}).then(() => {
-	  alert('Saved');
+	  console.log('Saved');
 	}).catch((error) => {
 	  console.error('Error saving to the database:', error);
 	});
@@ -84,9 +84,11 @@ function retrieve() {
 
 function createPreview() {
 	const preview = document.createElement("div");
+	const contianer = document.getElementById("allPreview");
+
 	console.log("Add");
 	preview.classList.add('pre-box')
-	document.body.appendChild(preview);
+	contianer.appendChild(preview);
 }
 
 onAuthStateChanged(auth, user => {
