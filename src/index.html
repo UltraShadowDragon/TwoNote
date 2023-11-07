@@ -10,6 +10,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   </head>
   <body>
+    <!-- Recently Opened/All Notebook columns -->
     <h2 class="text-center py-3">TwoNote</h2>
     <hr class="p-0 m-0">
     <div class="container-fluid">
@@ -17,12 +18,13 @@
         <div class="col-12 col-sm-4 text-center border border-3 border-black">
           <h3>Recetly Opened</h3>
         </div>
-        <div class="col-12 col-sm-8 text-center border border-3 border-black">
+        <div id="allPreview" class="col-12 col-sm-8 text-center border border-3 border-black">
           <h3>All Notebooks</h3>
         </div>
       </div>
       <button id="fab" class="btn btn-success rounded-circle position-fixed bottom-0 end-0 m-5 p-3" data-bs-toggle="modal" data-bs-target="#exampleModal">+</button>
     </div>
+    <!-- Modal popup -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">

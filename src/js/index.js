@@ -28,6 +28,9 @@ document.addEventListener("DOMContentLoaded", (event) => {
       var notebook = $('#notebook-name').val();
 			console.log("Created. " +notebook)
       saveNotebook(notebook);
+	  const btncreate = document.querySelector("#Submit");
+	  
+	  btncreate.addEventListener("click", createPreview);
     }
 	});
 });
@@ -77,6 +80,13 @@ function retrieve() {
 	console.log("Section:" + section.value);
 
 	alert("Retrieved")
+}
+
+function createPreview() {
+	const preview = document.createElement("div");
+	console.log("Add");
+	preview.classList.add('pre-box')
+	document.body.appendChild(preview);
 }
 
 onAuthStateChanged(auth, user => {

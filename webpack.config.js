@@ -9,6 +9,7 @@ module.exports = {
     path: path.join(__dirname, 'dist/'),
     publicPath: '/',
   },
+  
 
   entry: {
     // define HTML files here
@@ -52,4 +53,15 @@ module.exports = {
     },
     ],
   },
+
+  resolve: {
+    fallback: {
+      "buffer": require.resolve("buffer/"),
+      "crypto": require.resolve("crypto-browserify"),
+      "path": require.resolve("path-browserify"), // Add this line
+      "zlib": require.resolve("browserify-zlib"),
+      "https": require.resolve("https-browserify"),
+    },
+  },    
+  
 };
