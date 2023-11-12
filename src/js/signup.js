@@ -14,7 +14,7 @@ import {
 } from './ui'
 
 import { initializeApp } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
+import { getAuth, connectAuthEmulator, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
 
 
 const firebaseApp = initializeApp({
@@ -88,6 +88,6 @@ btnSignup.addEventListener("click", createAccount)
 btnLogout.addEventListener("click", logout)
 
 const auth = getAuth(firebaseApp);
-connectAuthEmulator(auth, "http://localhost:3000");
+// connectAuthEmulator(auth, "http://localhost:3000");
 
 monitorAuthState();

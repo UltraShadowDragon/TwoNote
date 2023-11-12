@@ -41,6 +41,7 @@ export const showLoginError = (error) => {
 
 export const showLoginState = (user) => {
   lblAuthState.innerHTML = `You're logged in as ${user.displayName} (uid: ${user.uid}, email: ${user.email}) `
+  window.location.replace("index.html");
 }
 
 hideLoginError()
