@@ -1,5 +1,13 @@
 document.addEventListener("DOMContentLoaded", (event) => {
 	console.log("Signup Page Loaded!");
+  $("input").change(function(){
+    if (txtEmail.value == null || txtEmail.value === "") {
+      (txtEmail.siblings("label")[0]).show();
+    }
+    else{
+      (txtEmail.siblings("label")[0]).hide();
+    }
+  });
 });
 import '/src/css/signup.css';
 import { 
@@ -10,7 +18,9 @@ import {
   showLoginError, 
   btnLogin,
   btnSignup,
-  btnLogout
+  btnLogout,
+  onInputChange,
+  txtEmail
 } from './ui'
 
 import { initializeApp } from 'firebase/app';
