@@ -49,3 +49,12 @@ export const onInputChange = (val) => {
 }
 
 hideLoginError()
+
+$("input").on("input", function() {
+  var val = $(this).val();
+  if(val == null || val === ""){
+    $(this).removeClass("used");
+  }else{
+    $(this).addClass("used");
+  }
+});
