@@ -2,6 +2,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, connectAuthEmulator, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
 import { getDatabase, ref, set } from 'firebase/database';
 
+const btnOut = document.getElementById('#btnOut');
 
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
@@ -26,13 +27,22 @@ document.addEventListener("DOMContentLoaded", (event) => {
 	$('#exampleModal').on('hide.bs.modal', function (e) { 
 		var tmpid = $(document.activeElement).attr('id'); 
 		if (tmpid === 'Submit') {
-      var notebook = $('#notebook-name').val();
-			console.log("Created. " +notebook)
-      saveNotebook(notebook);
-	  const btncreate = document.querySelector("#Submit");
-	  
-	  btncreate.addEventListener("click", createPreview);
-    }
+			var notebook = $('#notebook-name').val();
+					console.log("Created. " +notebook)
+			saveNotebook(notebook);
+			const btncreate = document.querySelector("#Submit");
+			
+			btncreate.addEventListener("click", createPreview(notebook));
+		}
+	});
+	$("#btnOut").click(function(){
+		console.log("logged out")
+		if (confirm("Are you sure you want to logout?")) {
+			window.location.replace("signup.html");
+			signOut(auth);		  
+		} else {
+			//Do nothing
+		}
 	});
 });
 
@@ -83,13 +93,15 @@ function retrieve() {
 	alert("Retrieved")
 }
 
-function createPreview() {
-	const preview = document.createElement("div");
-	const contianer = document.getElementById("allPreview");
+function createPreview(name) {
+	// const preview = document.createElement("div");
+	// const contianer = document.getElementById("allPreview");
 
 	console.log("Add");
-	preview.classList.add('pre-box')
-	contianer.appendChild(preview);
+	// preview.classList.add('pre-box')
+	// contianer.appendChild(preview);
+	$('<div class="card pre-box"></div>').html('<img class="card-img-top" src="https://storage.googleapis.com/media-newsinitiative/images/GO801_GNI_VerifyingPhotos_Card2_image3.original.jpg" alt="Card image cap"><div class="card-body"><p class="card-text">'+name+'</p></div>').appendTo('#allPreview');
+	
 }
 
 onAuthStateChanged(auth, user => {
@@ -97,6 +109,7 @@ onAuthStateChanged(auth, user => {
     console.log('Logged in!');
   } else {
     console.log('No user! Please sign in.')
+	window.location.replace("signup.html");
   }
 });
 

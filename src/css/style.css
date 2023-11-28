@@ -14,9 +14,8 @@
 .pre-box{
     width: 150px;
     height: 200px;
-    border-width: 10px;
-    border-radius: 10%;
-    border-color: black;
+    border: 5px solid white;
+    border-radius: 5%;
     box-shadow: 0px 0px 10px var(--clr--gray--med);
     margin: 10px;
 }
@@ -34,3 +33,10 @@
     color: whitesmoke;
 }
 
+#allPreview{
+    color: whitesmoke;
+}
+
+.bookLabel{
+    color: beige;
+}
