@@ -40,8 +40,6 @@ document.addEventListener("DOMContentLoaded", (event) => {
 		if (confirm("Are you sure you want to logout?")) {
 			window.location.replace("signup.html");
 			signOut(auth);		  
-		} else {
-			//Do nothing
 		}
 	});
 });
