@@ -40,3 +40,8 @@
 .bookLabel{
     color: beige;
 }
+
+#search{
+    width: 500px;
+    height: 45px;
+}

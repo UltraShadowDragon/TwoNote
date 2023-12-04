@@ -1,6 +1,8 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, connectAuthEmulator, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
-import { getDatabase, ref, set } from 'firebase/database';
+import { getDatabase, ref, set, get, child} from 'firebase/database';
+import {v4 as uuidv4} from 'uuid';
+
 
 const btnOut = document.getElementById('#btnOut');
 
@@ -42,20 +44,17 @@ document.addEventListener("DOMContentLoaded", (event) => {
 			signOut(auth);		  
 		}
 	});
+	getAllNotebooks();
 });
 
-function saveNotebook(notebook) {
+function saveNotebook(notebookname) {
 
 	console.log("Saving...");
-	// var email = document.getElementById('email').value;
-	// var username = document.getElementById('username').value;
-	// var password = document.getElementById('password').value;
-	// var notebook = document.getElementById('notebook').value;
-	// // var section = document.getElementById('section').value;
-	// // var page = document.getElementById('page').value;
+	let uuid = uuidv4();
 
-	set(ref(db, 'notebooks/' + notebook), {
-		notebook: notebook
+	set(ref(db, 'notebooks/' + uuid), {
+		name: notebookname,
+		uuid: uuid
 	}).then(() => {
 	  console.log('Saved');
 	}).catch((error) => {
@@ -63,22 +62,22 @@ function saveNotebook(notebook) {
 	});
 }
 
-function saveUser(username) {
-
-	console.log("Saving...");
-	// var email = document.getElementById('email').value;
-	// var username = document.getElementById('username').value;
-	// var password = document.getElementById('password').value;
-	// var notebook = document.getElementById('notebook').value;
-	// // var section = document.getElementById('section').value;
-	// // var page = document.getElementById('page').value;
-
-	set(ref(db, 'users/' + username), {
-		username: username
-	}).then(() => {
-	  console.log('Saved');
+function getAllNotebooks() {
+	const dbRef = ref(getDatabase());
+	get(child(dbRef, 'notebooks')).then((snapshot) => {
+		if (snapshot.exists()) {
+			for (var key in snapshot.val()) {
+				if (snapshot.val().hasOwnProperty(key)) {
+					console.log(key + " -> " + snapshot.val()[key]["name"]);
+					createPreview(snapshot.val()[key]["name"]);
+				}
+			}
+			// console.log(snapshot.val());
+		} else {
+			console.log("No data available");
+		}
 	}).catch((error) => {
-	  console.error('Error saving to the database:', error);
+		console.error(error);
 	});
 }
 
