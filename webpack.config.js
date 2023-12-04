@@ -13,8 +13,8 @@ module.exports = {
 
   entry: {
     // define HTML files here
-    index: './src/index.html',  // => dist/index.html
-    signup: './src/signup.html', // => dist/signup.html
+    index: './docs/index.html',  // => dist/index.html
+    signup: './docs/signup.html', // => dist/signup.html
     // ...
   },
 
