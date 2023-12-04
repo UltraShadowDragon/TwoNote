@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     }
   });
 });
-import '/src/css/signup.css';
+import '/docs/css/signup.css';
 import { 
   hideLoginError, 
   showLoginState, 
