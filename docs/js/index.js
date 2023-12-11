@@ -32,10 +32,10 @@ document.addEventListener("DOMContentLoaded", (event) => {
 		if (tmpid === 'Submit') {
 			var notebook = $('#notebook-name').val();
 					console.log("Created. " +notebook)
-			saveNotebook(notebook);
+			var uuid = saveNotebook(notebook);
 			const btncreate = document.querySelector("#Submit");
 			
-			btncreate.addEventListener("click", createPreview(notebook));
+			btncreate.addEventListener("click", createPreview(notebook, uuid));
 		}
 	});
 	$("#btnOut").click(function(){
@@ -62,6 +62,8 @@ function saveNotebook(notebookname) {
 	}).catch((error) => {
 	  console.error('Error saving to the database:', error);
 	});
+
+	return uuid;
 }
 
 function getAllNotebooks() {
@@ -71,10 +73,10 @@ function getAllNotebooks() {
 			for (var key in snapshot.val()) {
 				if (snapshot.val().hasOwnProperty(key)) {
 					console.log(key + " -> " + snapshot.val()[key]["name"]);
-					createPreview(snapshot.val()[key]["name"]);
+					createPreview(snapshot.val()[key]["name"], snapshot.val()[key]["uuid"]);
 				}
 			}
-			// console.log(snapshot.val());
+			console.log(snapshot.val());
 		} else {
 			console.log("No data available");
 		}
@@ -92,15 +94,17 @@ function retrieve() {
 	alert("Retrieved")
 }
 
-function createPreview(name) {
+function createPreview(name, uuid) {
 	// const preview = document.createElement("div");
 	// const contianer = document.getElementById("allPreview");
 
 	console.log("Add");
 	// preview.classList.add('pre-box')
 	// contianer.appendChild(preview);
-	$('<div class="card pre-box"></div>').html('<img class="card-img-top" src="https://storage.googleapis.com/media-newsinitiative/images/GO801_GNI_VerifyingPhotos_Card2_image3.original.jpg" alt="Card image cap"><div class="card-body"><p class="card-text">'+name+'</p></div>').appendTo('#allPreview');
-	
+	$('<div id="'+uuid+'" class="card pre-box"></div>').html('<img class="card-img-top" src="https://storage.googleapis.com/media-newsinitiative/images/GO801_GNI_VerifyingPhotos_Card2_image3.original.jpg" alt="Card image cap"><div class="card-body"><p class="card-text">'+name+'</p></div>').appendTo('#allPreview');
+	$('#'+uuid).click(function(){
+		window.location.assign("notebook.html?uuid=" +uuid)
+	});
 }
 
 onAuthStateChanged(auth, user => {

@@ -15,6 +15,7 @@ module.exports = {
     // define HTML files here
     index: './docs/index.html',  // => dist/index.html
     signup: './docs/signup.html', // => dist/signup.html
+    notebook: './docs/notebook.html'
     // ...
   },
 
