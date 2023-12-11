@@ -54,7 +54,8 @@ function saveNotebook(notebookname) {
 
 	set(ref(db, 'notebooks/' + uuid), {
 		name: notebookname,
-		uuid: uuid
+		uuid: uuid,
+		owner: email
 	}).then(() => {
 	  console.log('Saved');
 	}).catch((error) => {
