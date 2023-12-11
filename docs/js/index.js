@@ -1,10 +1,11 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, connectAuthEmulator, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
-import { getDatabase, ref, set, get, child} from 'firebase/database';
+import { getDatabase, ref, set, get, child, orderByChild, equalTo} from 'firebase/database';
 import {v4 as uuidv4} from 'uuid';
 
 
 const btnOut = document.getElementById('#btnOut');
+var userEmail = null
 
 // TODO: Replace the following with your app's Firebase project configuration
 const firebaseConfig = {
@@ -55,7 +56,7 @@ function saveNotebook(notebookname) {
 	set(ref(db, 'notebooks/' + uuid), {
 		name: notebookname,
 		uuid: uuid,
-		owner: email
+		owner: userEmail
 	}).then(() => {
 	  console.log('Saved');
 	}).catch((error) => {
@@ -104,7 +105,8 @@ function createPreview(name) {
 
 onAuthStateChanged(auth, user => {
   if(user != null){
-    console.log('Logged in!');
+	userEmail = user.email
+    console.log('Logged in!', userEmail);
   } else {
     console.log('No user! Please sign in.')
 	window.location.replace("signup.html");
