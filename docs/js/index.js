@@ -103,6 +103,7 @@ function createPreview(name, uuid) {
 	// contianer.appendChild(preview);
 	$('<div id="'+uuid+'" class="card pre-box"></div>').html('<img class="card-img-top" src="https://storage.googleapis.com/media-newsinitiative/images/GO801_GNI_VerifyingPhotos_Card2_image3.original.jpg" alt="Card image cap"><div class="card-body"><p class="card-text">'+name+'</p></div>').appendTo('#allPreview');
 	$('#'+uuid).click(function(){
+		localStorage.setItem("twonote.Uuid", uuid)
 		window.location.assign("notebook.html?uuid=" +uuid)
 	});
 }

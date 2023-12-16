@@ -3,7 +3,7 @@ const HtmlBundlerPlugin = require('html-bundler-webpack-plugin');
 
 module.exports = {
   mode: 'development',
-  devtool: 'eval-source-map',
+  devtool: 'source-map',
 
   output: {
     path: path.join(__dirname, 'dist/'),
