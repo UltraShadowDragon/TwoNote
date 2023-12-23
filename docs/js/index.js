@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, connectAuthEmulator, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
-import { getDatabase, ref, set, get, child, orderByChild, equalTo} from 'firebase/database';
+import { getDatabase, ref, set, get, child, orderByChild, equalTo, limitToFirst, limitToLast, query} from 'firebase/database';
 import {v4 as uuidv4} from 'uuid';
 
 
@@ -66,24 +66,78 @@ function saveNotebook(notebookname) {
 	return uuid;
 }
 
+// function getAllNotebooks() {
+// 	const dbRef = ref(getDatabase());
+// 	get(child(dbRef, 'notebooks')).then((snapshot) => {
+// 		if (snapshot.exists()) {
+// 			for (var key in snapshot.val()) {
+// 				if (snapshot.val().hasOwnProperty(key)) {
+// 					console.log(key + " -> " + snapshot.val()[key]["name"] + " " + snapshot.val()[key]["owner"]);
+// 					createPreview(snapshot.val()[key]["name"], snapshot.val()[key]["uuid"]);
+// 				}
+// 			}
+// 			console.log(snapshot.val());
+// 		} else {
+// 			console.log("No data available");
+// 		}
+// 	}).catch((error) => {
+// 		console.error(error);
+// 	});
+// }
+
+// function getAllNotebooks() {
+// 	const dbRef = ref(getDatabase(), 'notebooks');
+	
+// 	// Assuming userEmail is a global variable or accessible in this scope
+// 	const userQuery = query(dbRef, orderByChild('owner'), equalTo(userEmail));
+	
+// 	get(userQuery).then((snapshot) => {
+// 	  if (snapshot.exists()) {
+// 		console.log('Data snapshot:', snapshot.val());
+// 		for (var key in snapshot.val()) {
+// 		  if (snapshot.val().hasOwnProperty(key)) {
+// 			console.log(key + " -> " + snapshot.val()[key]["name"] + " " + snapshot.val()[key]["owner"]);
+// 			createPreview(snapshot.val()[key]["name"], snapshot.val()[key]["uuid"]);
+// 		  }
+// 		}
+// 	  } else {
+// 		console.log("No data available");
+// 	  }
+// 	}).catch((error) => {
+// 	  console.error(error);
+// 	});
+// }
+
 function getAllNotebooks() {
-	const dbRef = ref(getDatabase());
-	get(child(dbRef, 'notebooks')).then((snapshot) => {
-		if (snapshot.exists()) {
-			for (var key in snapshot.val()) {
-				if (snapshot.val().hasOwnProperty(key)) {
-					console.log(key + " -> " + snapshot.val()[key]["name"]);
-					createPreview(snapshot.val()[key]["name"], snapshot.val()[key]["uuid"]);
-				}
-			}
-			console.log(snapshot.val());
-		} else {
-			console.log("No data available");
+	const dbRef = ref(getDatabase(), 'notebooks');
+  
+	get(dbRef).then((snapshot) => {
+	  if (snapshot.exists()) {
+		console.log('Data snapshot:', snapshot.val());
+  
+		// Explicitly check and log each notebook before creating a preview
+		for (const key in snapshot.val()) {
+		  if (snapshot.val().hasOwnProperty(key)) {
+			const notebook = snapshot.val()[key];
+			console.log('Checking notebook:', notebook);
+  
+			// Check if the notebook belongs to the current user
+			if (notebook.owner.trim() === userEmail) {
+				console.log('Notebook belongs to the user. Creating preview.');
+				createPreview(notebook.name, notebook.uuid);
+			} else {
+				console.log('Notebook does not belong to the user. Skipping.');
+			}  
+		  }
 		}
+	  } else {
+		console.log("No data available");
+	  }
 	}).catch((error) => {
-		console.error(error);
+	  console.error(error);
 	});
 }
+  
 
 function retrieve() {
 
@@ -107,6 +161,11 @@ function createPreview(name, uuid) {
 		window.location.assign("notebook.html?uuid=" +uuid)
 	});
 }
+
+
+  
+  
+  
 
 onAuthStateChanged(auth, user => {
   if(user != null){
