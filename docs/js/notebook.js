@@ -23,48 +23,36 @@ var notebookUuid = localStorage.getItem("twonote.Uuid")
 console.log(notebookUuid);
 
 document.addEventListener("DOMContentLoaded", (event) => {
-    getNotebookByUuid(notebookUuid)
-    $('#trumbowyg-demo').trumbowyg();
+    getNotebookByUuid(notebookUuid);
+    $('#trumbowyg-demo').trumbowyg();    
 
-    addEventListener("input", (event) => {
-        saveData()
-    })
-})
-
-let intervalID;
-
+    $("#floatingTextarea2").on("input", () => {
+        saveData();
+    });
+});
 
 function getNotebookByUuid(uuid) {
-	const dbRef = ref(getDatabase());
-	get(child(dbRef, 'notebooks/' +uuid)).then((snapshot) => {
-		if (snapshot.exists()) {
-            $('#floatingTextarea2').val(snapshot.val()["content"]);
-			console.log(snapshot.val()["content"]);
-		} else {
-			console.log("No data available");
-		}
-	}).catch((error) => {
-		console.error(error);
-	});
+    const dbRef = ref(db, 'notebooks/' + uuid);
+    get(child(dbRef, 'content')).then((snapshot) => {
+        if (snapshot.exists()) {
+            $('#floatingTextarea2').val(snapshot.val());
+            console.log(snapshot.val());
+        } else {
+            console.log("No data available");
+        }
+    }).catch((error) => {
+        console.error(error);
+    });
 }
 
 function saveData() {
+    var txtVal = $("#floatingTextarea2").val();
 
-    var txtValinitial = $("#floatingTextarea2").val();
-
-    addEventListener("input", (event) => {
-        var txtVal = $("#floatingTextarea2").val();
-
-        if (txtVal != txtValinitial) {
-            console.log(txtVal);
-            txtValinitial = txtVal
-            update(ref(db, '/notebooks/' +notebookUuid), {
-                content: txtVal
-            }).then(() => {
-                console.log('Saved');
-            }).catch((error) => {
-                console.error('Error saving to the database:', error);
-            });            
-        }
-    })
+    update(ref(db, 'notebooks/' + notebookUuid), {
+        content: txtVal
+    }).then(() => {
+        console.log('Saved');
+    }).catch((error) => {
+        console.error('Error saving to the database:', error);
+    });
 }
