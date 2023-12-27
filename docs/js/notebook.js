@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
     getNotebookByUuid(notebookUuid);
     $('#trumbowyg-demo').trumbowyg();    
 
-    $("#floatingTextarea2").on("input", () => {
+    $("#trumbowyg-demo").on("input", () => {
         saveData();
     });
 });
@@ -35,7 +35,7 @@ function getNotebookByUuid(uuid) {
     const dbRef = ref(db, 'notebooks/' + uuid);
     get(child(dbRef, 'content')).then((snapshot) => {
         if (snapshot.exists()) {
-            $('#floatingTextarea2').val(snapshot.val());
+            $('#trumbowyg-demo').text(snapshot.val());
             console.log(snapshot.val());
         } else {
             console.log("No data available");
@@ -46,12 +46,9 @@ function getNotebookByUuid(uuid) {
 }
 
 function saveData() {
-    var txtVal = $("#floatingTextarea2").val();
-
+    var txtVal = $("#trumbowyg-demo").text();
     update(ref(db, 'notebooks/' + notebookUuid), {
         content: txtVal
-    }).then(() => {
-        console.log('Saved');
     }).catch((error) => {
         console.error('Error saving to the database:', error);
     });
