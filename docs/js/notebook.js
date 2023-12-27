@@ -24,15 +24,14 @@ console.log(notebookUuid);
 
 document.addEventListener("DOMContentLoaded", (event) => {
     getNotebookByUuid(notebookUuid)
+
+    addEventListener("input", (event) => {
+        saveData()
+    })
 })
 
 let intervalID;
 
-repeat()
-
-function repeat() {
-    intervalID = setInterval(saveData, 1000);
-}
 
 function getNotebookByUuid(uuid) {
 	const dbRef = ref(getDatabase());
@@ -49,7 +48,6 @@ function getNotebookByUuid(uuid) {
 }
 
 function saveData() {
-    console.log("Saving...");
 
     var txtValinitial = $("#floatingTextarea2").val();
 
