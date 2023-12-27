@@ -24,6 +24,7 @@ console.log(notebookUuid);
 
 document.addEventListener("DOMContentLoaded", (event) => {
     getNotebookByUuid(notebookUuid)
+    $('#trumbowyg-demo').trumbowyg();
 
     addEventListener("input", (event) => {
         saveData()
