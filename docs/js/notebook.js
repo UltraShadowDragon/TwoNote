@@ -67,7 +67,8 @@ function getNotebookByUuid(uuid) {
     const dbRef = ref(db, 'notebooks/' + uuid);
     get(child(dbRef, 'content')).then((snapshot) => {
         if (snapshot.exists()) {
-            $('#editor').text(snapshot.val());
+            // $('#editor').text(snapshot.val());
+            $('#editor').trumbowyg('html', snapshot.val());
             console.log(snapshot.val());
         } else {
             console.log("No data available");
@@ -78,7 +79,8 @@ function getNotebookByUuid(uuid) {
 }
 
 function saveData() {
-    var txtVal = $("#editor").text();
+    var txtVal = $("#editor").html();
+    console.log(txtVal)
     update(ref(db, 'notebooks/' + notebookUuid), {
         content: txtVal
     }).catch((error) => {
