@@ -1,28 +1,38 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
+<!doctype html>
+<html lang="en">
   <head>
-    <meta charset="utf-8">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title class="text-center">TwoNote</title>
-    <script src="./js/index.js"></script>
-    <link rel="stylesheet" type="text/css" href="./css/style.css">
+    <link rel="stylesheet" type="text/css" href="./styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
   </head>
-  <body>
-    <h2 class="text-center py-3">TwoNote</h2>
-    <hr class="p-0 m-0">
+  <body class="bg-black" style="--bs-bg-opacity: .85;">
+    <!-- Recently Opened/All Notebook columns -->
+    <h2 class="text-center py-3 text-white">TwoNote</h2>
+    <hr class="border border-white border-3 opacity-75">
+    <button id="btnOut" class="btn btn-danger position-fixed top-0 start-0">Log out</button>
     <div class="container-fluid">
       <div class="row">
-        <div class="col-12 col-sm-4 text-center border border-3 border-black">
-          <h3>Recetly Opened</h3>
+        <div class="col-12 col-sm-4 text-center border-end border-2 border-white border-opacity-75">
+          <h4 class="text-white">Recetly Opened</h3>
+          <div id="Recentpreview"></div>
         </div>
-        <div class="col-12 col-sm-8 text-center border border-3 border-black">
-          <h3>All Notebooks</h3>
+        <div class="col-12 col-sm-8 text-center border-start border-2 border-white border-opacity-75">
+          <div class="container-fluid">
+            <div class="d-flex justify-content-between">
+                <h3 class="text-white ms-5 mt-3">All Notebooks</h3>
+                <input id="search" class="text-white bg-black rounded-2" type="text" placeholder=" Search for Notebook">
+            </div>
+            <div id="allPreview"></div>
+          </div>
         </div>
       </div>
       <button id="fab" class="btn btn-success rounded-circle position-fixed bottom-0 end-0 m-5 p-3" data-bs-toggle="modal" data-bs-target="#exampleModal">+</button>
     </div>
+    <!-- Modal popup -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -45,5 +55,7 @@
         </div>
       </div>
     </div>
+
+    <script type="module" src="./main.js"></script>
   </body>
 </html>

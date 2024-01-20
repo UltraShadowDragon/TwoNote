@@ -1,23 +1,27 @@
 {
-  "name": "twonote",
-  "version": "1.0.0",
-  "description": "",
-  "main": "src/js/index.js",
+  "name": "vitevanilla",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "build": "webpack --watch",
-    "serve": "npx serve dist",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "firebase": "^10.5.0",
-    "serve": "^14.2.1"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "devDependencies": {
-    "css-loader": "^6.8.1",
-    "html-bundler-webpack-plugin": "^2.15.2",
-    "webpack": "^5.89.0",
-    "webpack-cli": "^5.1.4"
+    "vite": "^5.0.8",
+    "vite-plugin-inspect": "^0.8.1"
+  },
+  "dependencies": {
+    "browserify-zlib": "^0.2.0",
+    "buffer": "^6.0.3",
+    "crypto-browserify": "^3.12.0",
+    "firebase": "^10.7.1",
+    "https-browserify": "^1.0.0",
+    "path-browserify": "^1.0.1",
+    "serve": "^14.2.1",
+    "stream-browserify": "^3.0.0",
+    "util": "^0.12.5",
+    "uuid": "^9.0.1"
   }
 }
