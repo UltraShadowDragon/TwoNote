@@ -33,10 +33,14 @@ document.addEventListener("DOMContentLoaded", (event) => {
     $('#editor').trumbowyg({
         svgPath: true,
         btns: [
+            ['undo', 'redo'], // Only supported in Blink browsers
             ['formatting'],
-            ['bold', 'italic', 'underline', 'strikethrough'],
+            ['strong', 'em', 'del'],
             ['fontfamily'],
+            ['superscript', 'subscript'],
             ['link'],
+            ['insertImage'],
+            ['justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull'],
             ['unorderedList', 'orderedList'],
             ['horizontalRule'],
             ['removeformat'],
