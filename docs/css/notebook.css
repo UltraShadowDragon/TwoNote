@@ -1,3 +1,7 @@
-#trumbowyg-demo{
+#editor{
     color: white;
+}
+
+#editor .trumbowyg-html-btn {
+    display: none !important;
 }

@@ -24,18 +24,46 @@ console.log(notebookUuid);
 
 document.addEventListener("DOMContentLoaded", (event) => {
     getNotebookByUuid(notebookUuid);
-    $('#trumbowyg-demo').trumbowyg();    
+    // $('#editor').trumbowyg();
 
-    $("#trumbowyg-demo").on("input", () => {
+    // $.trumbowyg.svgPath = '/assets/my-custom-path/icons.svg';
+    $.trumbowyg.svgAbsoluteUsePath = true;
+
+    
+    $('#editor').trumbowyg({
+        svgPath: true,
+        btns: [
+            ['formatting'],
+            ['bold', 'italic', 'underline', 'strikethrough'],
+            ['fontfamily'],
+            ['link'],
+            ['unorderedList', 'orderedList'],
+            ['horizontalRule'],
+            ['removeformat'],
+            ['fullscreen']
+        ],
+        plugins: {
+            fontfamily: true, // Add this line for the font family plugin
+            // Add other plugins here
+        },
+        // Add other configuration options if needed
+    });
+
+
+    $("#editor").on("input", () => {
         saveData();
     });
+
 });
+
+
+
 
 function getNotebookByUuid(uuid) {
     const dbRef = ref(db, 'notebooks/' + uuid);
     get(child(dbRef, 'content')).then((snapshot) => {
         if (snapshot.exists()) {
-            $('#trumbowyg-demo').text(snapshot.val());
+            $('#editor').text(snapshot.val());
             console.log(snapshot.val());
         } else {
             console.log("No data available");
@@ -46,7 +74,7 @@ function getNotebookByUuid(uuid) {
 }
 
 function saveData() {
-    var txtVal = $("#trumbowyg-demo").text();
+    var txtVal = $("#editor").text();
     update(ref(db, 'notebooks/' + notebookUuid), {
         content: txtVal
     }).catch((error) => {
