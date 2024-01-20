@@ -1,9 +1,8 @@
 import {
   hideLoginError,
-  showLoginState,
+  showLoginError,
   showLoginForm,
   showApp,
-  showLoginError,
   btnLogin,
   btnSignup,
   btnLogout,
@@ -23,7 +22,7 @@ import {
 document.addEventListener("DOMContentLoaded", (event) => {
   console.log("Signup Page Loaded!");
   $("input").change(function () {
-    if (txtEmail.value == null || txtEmail.value === "") {
+    if (txtEmail.value == null || txtEmail.value == "") {
       txtEmail.siblings("label")[0].show();
     } else {
       txtEmail.siblings("label")[0].hide();
@@ -48,16 +47,16 @@ const loginEmailPassword = async () => {
   const loginPassword = txtPassword.value;
 
   // step 1: try doing this w/o error handling, and then add try/catch
-  await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
+  // await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
 
   // step 2: add error handling
-  // try {
-  //   await signInWithEmailAndPassword(auth, loginEmail, loginPassword)
-  // }
-  // catch(error) {
-  //   console.log(`There was an error: ${error}`)
-  //   showLoginError(error)
-  // }
+  try {
+    await signInWithEmailAndPassword(auth, loginEmail, loginPassword)
+  }
+  catch(error) {
+    console.log(`There was an error: ${error}`)
+    showLoginError(error)
+  }
 };
 
 // Create new account using email/password
@@ -79,10 +78,9 @@ const monitorAuthState = async () => {
     if (user) {
       console.log(user);
       showApp();
-      showLoginState(user);
+      // showLoginState(user);
 
       hideLoginError();
-      hideLinkError();
     } else {
       showLoginForm();
       lblAuthState.innerHTML = `You're not logged in.`;
