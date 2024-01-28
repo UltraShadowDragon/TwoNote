@@ -1,0 +1,11 @@
+#editor{
+    color: white;
+}
+
+#editor .trumbowyg-html-btn {
+    display: none !important;
+}
+
+.trumbowyg-box{
+    border: 0px !important;
+}
