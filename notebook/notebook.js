@@ -24,21 +24,9 @@ var notebookUuid = urlParams.get('uuid');
 
 document.addEventListener("DOMContentLoaded", (event) => {
     getNotebookByUuid(notebookUuid);
-    // $('#editor').trumbowyg();
     
-    // $('#editor').trumbowyg({
-    //   plugins: {
-    //       fontfamily: true  // Enable the fontfamily plugin
-    //   }
-    // });
-    $.trumbowyg.svgPath = true;
-
-    // $.trumbowyg.svgPath = '/assets/my-custom-path/icons.svg';
-    // $.trumbowyg.svgAbsoluteUsePath = true;
-
     
     $('#editor').trumbowyg({
-        svgPath: true,
         btns: [
             ['undo', 'redo'], // Only supported in Blink browsers
             ['formatting'],
@@ -58,6 +46,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
             // Add other plugins here
         },
         // Add other configuration options if needed
+        svgPath: '#trumbowyg-icons'
     });
 
 
