@@ -170,6 +170,7 @@ function createPreview(name, uuid) {
 onAuthStateChanged(auth, user => {
   if(user != null){
 	userEmail = user.email
+	localStorage.setItem ( 'loggedIn', userEmail ); 
     console.log('Logged in!', userEmail);
   } else {
     console.log('No user! Please sign in.')

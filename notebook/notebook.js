@@ -22,6 +22,21 @@ const db = getDatabase(app);
 const urlParams = new URLSearchParams(window.location.search);
 var notebookUuid = urlParams.get('uuid');
 
+var userEmail = localStorage.getItem('loggedIn');
+console.log(userEmail)
+
+// onAuthStateChanged(auth, user => {
+//     if(user != null){
+//       userEmail = user.email
+//       console.log('Logged in!', userEmail);
+//     } else {
+//       console.log('No user! Please sign in.')
+//         window.location.replace("/login/");
+//     }
+// });
+  
+
+
 document.addEventListener("DOMContentLoaded", (event) => {
     getNotebookByUuid(notebookUuid);
     
@@ -54,6 +69,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
         saveData();
     });
 
+    getRecent();
+
 });
 
 
@@ -81,4 +98,48 @@ function saveData() {
     }).catch((error) => {
         console.error('Error saving to the database:', error);
     });
+}
+
+$('h1').click(function(){
+    window.location.replace("/index.html");
+});
+
+
+function getRecent() {
+    if (userEmail === null) {
+        console.log("OH NO!")
+        return;
+    }
+    var strippeduserEmail = userEmail.replace('.', '-');
+    console.log(strippeduserEmail);
+
+    const dbRef = ref(db, 'recentlyOpened/' + strippeduserEmail);
+    get(child(dbRef, 'content')).then((snapshot) => {
+        console.log('SNAPSHOT.VAL BETER WORK THIS TIME ',snapshot.val())
+        if (snapshot.exists()) {
+            let uuidarray = snapshot.val();
+            console.log('DSAJFADL;SJFAS;DLKJFASDKL;FJAKL;SDFJ ', uuidarray);
+            uuidarray.push(notebookUuid);
+            saveRecent(uuidarray);
+        } else {
+            console.log("No data available");
+            saveRecent([notebookUuid]);
+        }
+    }).catch((error) => {
+        console.error(error);
+    });
+}
+
+function saveRecent(Recents) {
+    if (userEmail === null) {
+        return;
+    }
+    var strippeduserEmail = userEmail.replace('.', '-');
+    console.log(strippeduserEmail);
+
+	set(ref(db, 'recentlyOpened/' + strippeduserEmail), Recents).then(() => {
+	  console.log('Saved');
+	}).catch((error) => {
+	  console.error('Error saving to the database:', error);
+	});
 }
