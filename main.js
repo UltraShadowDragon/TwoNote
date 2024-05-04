@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 			signOut(auth);		  
 		}
 	});
-	getAllNotebooks();
+
 });
 
 function saveNotebook(notebookname) {
@@ -66,47 +66,6 @@ function saveNotebook(notebookname) {
 	return uuid;
 }
 
-// function getAllNotebooks() {
-// 	const dbRef = ref(getDatabase());
-// 	get(child(dbRef, 'notebooks')).then((snapshot) => {
-// 		if (snapshot.exists()) {
-// 			for (var key in snapshot.val()) {
-// 				if (snapshot.val().hasOwnProperty(key)) {
-// 					console.log(key + " -> " + snapshot.val()[key]["name"] + " " + snapshot.val()[key]["owner"]);
-// 					createPreview(snapshot.val()[key]["name"], snapshot.val()[key]["uuid"]);
-// 				}
-// 			}
-// 			console.log(snapshot.val());
-// 		} else {
-// 			console.log("No data available");
-// 		}
-// 	}).catch((error) => {
-// 		console.error(error);
-// 	});
-// }
-
-// function getAllNotebooks() {
-// 	const dbRef = ref(getDatabase(), 'notebooks');
-	
-// 	// Assuming userEmail is a global variable or accessible in this scope
-// 	const userQuery = query(dbRef, orderByChild('owner'), equalTo(userEmail));
-	
-// 	get(userQuery).then((snapshot) => {
-// 	  if (snapshot.exists()) {
-// 		console.log('Data snapshot:', snapshot.val());
-// 		for (var key in snapshot.val()) {
-// 		  if (snapshot.val().hasOwnProperty(key)) {
-// 			console.log(key + " -> " + snapshot.val()[key]["name"] + " " + snapshot.val()[key]["owner"]);
-// 			createPreview(snapshot.val()[key]["name"], snapshot.val()[key]["uuid"]);
-// 		  }
-// 		}
-// 	  } else {
-// 		console.log("No data available");
-// 	  }
-// 	}).catch((error) => {
-// 	  console.error(error);
-// 	});
-// }
 
 function getAllNotebooks() {
 	const dbRef = ref(getDatabase(), 'notebooks');
@@ -124,7 +83,7 @@ function getAllNotebooks() {
 			// Check if the notebook belongs to the current user
 			if (notebook.owner.trim() === userEmail) {
 				console.log('Notebook belongs to the user. Creating preview.');
-				createPreview(notebook.name, notebook.uuid);
+				createPreview(notebook.name, notebook.uuid, '#allPreview');
 			} else {
 				console.log('Notebook does not belong to the user. Skipping.');
 			}  
@@ -137,7 +96,53 @@ function getAllNotebooks() {
 	  console.error(error);
 	});
 }
+
+
+function showRecentNotebooks(uuid) {
+    const dbRef = ref(db, 'notebooks/' + uuid);
+	console.log('Hello, world: ',uuid)
+    get(child(dbRef, 'name')).then((snapshot) => {
+        if (snapshot.exists()) {
+			createPreview(snapshot.val(), uuid, '#Recentpreview')
+		} else {
+            console.log("No data available");
+        }
+    }).catch((error) => {
+        console.error(error);
+    });
+}
   
+function getAllRecents() {
+
+    if (userEmail == null) {
+        console.log("OH NO!")
+        return;
+    }
+    var strippeduserEmail = userEmail.replace('.', '-');
+    console.log(strippeduserEmail);
+	//Step 1, get all recents
+	//Step 1.5, pick last 5
+	//Step 1.75 get their names and their Uuid
+	//step 2 make them appear
+    const dbRef = ref(db, 'recentlyOpened/' + strippeduserEmail);
+    get((dbRef)).then((snapshot) => {
+        console.log('Snapshot:',snapshot.val())
+        if (snapshot.exists()) {
+            let uuidarray = snapshot.val();
+            console.log('Uuidarray:', uuidarray);
+			let last5 = uuidarray.slice(-5)
+			console.log('Last5: ', last5);
+			for (let i = uuidarray.length-1; i>=0; i--) {
+				showRecentNotebooks(uuidarray[i]);
+			}
+        } else {
+            console.log("No data available");
+        }
+    }).catch((error) => {
+        console.error('Error retrieving data:', error);
+    });    
+}
+
 
 function retrieve() {
 
@@ -148,14 +153,14 @@ function retrieve() {
 	alert("Retrieved")
 }
 
-function createPreview(name, uuid) {
+function createPreview(name, uuid, contianer) {
 	// const preview = document.createElement("div");
 	// const contianer = document.getElementById("allPreview");
 
 	console.log("Add");
 	// preview.classList.add('pre-box')
 	// contianer.appendChild(preview);
-	$('<div id="'+uuid+'" class="card pre-box"></div>').html('<img class="card-img-top" src="https://storage.googleapis.com/media-newsinitiative/images/GO801_GNI_VerifyingPhotos_Card2_image3.original.jpg" alt="Card image cap"><div class="card-body"><p class="card-text">'+name+'</p></div>').appendTo('#allPreview');
+	$('<div id="'+uuid+'" class="card pre-box"></div>').html('<img class="card-img-top" src="https://storage.googleapis.com/media-newsinitiative/images/GO801_GNI_VerifyingPhotos_Card2_image3.original.jpg" alt="Card image cap"><div class="card-body"><p class="card-text">'+name+'</p></div>').appendTo(contianer);
 	$('#'+uuid).click(function(){
 		// localStorage.setItem("twonote.Uuid", uuid)
 		window.location.assign("/notebook/?uuid=" +uuid)
@@ -163,18 +168,17 @@ function createPreview(name, uuid) {
 }
 
 
-  
-  
-  
-
 onAuthStateChanged(auth, user => {
   if(user != null){
 	userEmail = user.email
 	localStorage.setItem ( 'loggedIn', userEmail ); 
     console.log('Logged in!', userEmail);
+	getAllNotebooks();
+	getAllRecents();
   } else {
     console.log('No user! Please sign in.')
 	  window.location.replace("/login/");
   }
+  
 });
 

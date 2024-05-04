@@ -1,6 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, connectAuthEmulator, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
-import { getDatabase, ref, set, get, child, orderByChild, equalTo, update} from 'firebase/database';
+import { getDatabase, ref, set, get, child, orderByChild, equalTo, update, remove} from 'firebase/database';
 
 
 // TODO: Replace the following with your app's Firebase project configuration
@@ -114,11 +114,16 @@ function getRecent() {
     console.log(strippeduserEmail);
 
     const dbRef = ref(db, 'recentlyOpened/' + strippeduserEmail);
-    get(child(dbRef, 'content')).then((snapshot) => {
-        console.log('SNAPSHOT.VAL BETER WORK THIS TIME ',snapshot.val())
+    get((dbRef)).then((snapshot) => {
+        console.log('Snapshot:',snapshot.val())
         if (snapshot.exists()) {
             let uuidarray = snapshot.val();
-            console.log('DSAJFADL;SJFAS;DLKJFASDKL;FJAKL;SDFJ ', uuidarray);
+            console.log('Uuidarray:', uuidarray);
+            //Check if notebookUuid is already in the uuidarray, if it is there delete it :( and then push it
+            let index = uuidarray.indexOf(notebookUuid);
+            if (index >= 0) {
+                uuidarray.splice(index, 1);
+            }
             uuidarray.push(notebookUuid);
             saveRecent(uuidarray);
         } else {
@@ -126,8 +131,8 @@ function getRecent() {
             saveRecent([notebookUuid]);
         }
     }).catch((error) => {
-        console.error(error);
-    });
+        console.error('Error retrieving data:', error);
+    });    
 }
 
 function saveRecent(Recents) {
@@ -136,6 +141,7 @@ function saveRecent(Recents) {
     }
     var strippeduserEmail = userEmail.replace('.', '-');
     console.log(strippeduserEmail);
+
 
 	set(ref(db, 'recentlyOpened/' + strippeduserEmail), Recents).then(() => {
 	  console.log('Saved');
