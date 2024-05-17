@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", (event) => {
 			var uuid = saveNotebook(notebook);
 			const btncreate = document.querySelector("#Submit");
 			
-			btncreate.addEventListener("click", createPreview(notebook, uuid));
+			btncreate.addEventListener("click", createPreview(notebook, uuid, '#allPreview'));
 		}
 	});
 	$("#btnOut").click(function(){

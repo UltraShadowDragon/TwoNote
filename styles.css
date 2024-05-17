@@ -27,6 +27,13 @@
   margin: 2em 0em;
 }
 
+#Recentpreview{
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 2em 0em;
+}
+
 #btnOut{
   margin: 5px;
   border-radius: 10%;
