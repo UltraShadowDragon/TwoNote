@@ -10,7 +10,7 @@ export default {
       input: {
         main: new URL('./index.html', import.meta.url).pathname,
         login: new URL('./login/index.html', import.meta.url).pathname,
-        home: new URL('./home/index.html', import.meta.url).pathname
+        home: new URL('/index.html', import.meta.url).pathname
       }
     }
   },
