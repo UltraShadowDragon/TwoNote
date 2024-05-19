@@ -10,6 +10,7 @@ export default {
       input: {
         main: new URL('./index.html', import.meta.url).pathname,
         login: new URL('./login/index.html', import.meta.url).pathname,
+        notebook: new URL('./notebook/index.html', import.meta.url).pathname
       }
     }
   },
