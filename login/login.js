@@ -1,23 +1,7 @@
-import {
-  hideLoginError,
-  showLoginError,
-  showLoginForm,
-  showApp,
-  btnLogin,
-  btnSignup,
-  btnLogout,
-  onInputChange,
-  txtEmail,
-} from "./ui";
-import { initializeApp } from "firebase/app";
-import {
-  getAuth,
-  connectAuthEmulator,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-  onAuthStateChanged,
-} from "firebase/auth";
+// login.js
+import { initializeApp } from '../node_modules/firebase/app';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from '../node_modules/firebase/auth';
+
 
 document.addEventListener("DOMContentLoaded", (event) => {
   console.log("Signup Page Loaded!");

@@ -1,7 +1,8 @@
-import { initializeApp } from 'firebase/app';
-import { getAuth, connectAuthEmulator, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
-import { getDatabase, ref, set, get, child, orderByChild, equalTo, limitToFirst, limitToLast, query} from 'firebase/database';
-import {v4 as uuidv4} from 'uuid';
+// main.js
+import { initializeApp } from './node_modules/firebase/app';
+import { getAuth, signOut, onAuthStateChanged } from './node_modules/firebase/auth';
+import { getDatabase, ref, set, get, child, query } from './node_modules/firebase/database';
+import { v4 as uuidv4 } from './node_modules/uuid';
 
 
 const btnOut = document.getElementById('#btnOut');
