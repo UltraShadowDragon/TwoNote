@@ -2,23 +2,22 @@
     "version": 2,
     "builds": [
       {
-        "src": "index.html",
+        "src": "dist/index.html",
         "use": "@vercel/static"
       }
     ],
     "routes": [
       {
         "src": "/login",
-        "dest": "/login/index.html"
+        "dest": "/dist/login/index.html"
       },
       {
         "src": "/notebook",
-        "dest": "/notebook/index.html"
+        "dest": "/dist/notebook/index.html"
       },
       {
         "src": "/(.*)",
-        "dest": "/$1"
+        "dest": "/dist/$1"
       }
     ]
-  }
-  
+}
