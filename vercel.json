@@ -12,8 +12,8 @@
         "dest": "/login/index.html"
       },
       {
-        "src": "/about",
-        "dest": "/about/index.html"
+        "src": "/notebook",
+        "dest": "/notebook/index.html"
       },
       {
         "src": "/(.*)",
